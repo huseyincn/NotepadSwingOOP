@@ -7,19 +7,20 @@ import java.io.*;
 public class Notepad extends JFrame {
 
     // Text area
-    private JTextArea textArea;
+    private JTextArea textArea; // ortaki text yazma bölgesi mobil programlamadaki editText
 
     // COMMAND YAPISI ICIN KULLANILIYOR
-    private SaveCommand saveCommand;
+    private SaveCommand saveCommand; // kaydetmek kısmı command design patterndan emir alıyorum
 
+    // COMMAND YAPISI ICIN KULLANILIYOR
+    private UpdateTitleCommand updateTitleCommand; // başlığı değiştirme kısmı command design patterndan emir alıyorum
     // ZAMAN ICIN OBSERVER CLASS
-    private UpdateTitleCommand updateTitleCommand;
-    private TimeTitleObserver timeTitleObserver;
+    private TimeTitleObserver timeTitleObserver; // zamanı saniye saniye izlemek için observer nesnesi yapıyorum
 
     // File
-    private File currentFile;
+    private File currentFile; // kaydedilcek veya açılan dosyayı nesne olarak tutuyorum
 
-    public Notepad() {
+    public Notepad() { // NOTEPAD kısmı internetten alındı basit notepad üzerinde değişiklik yapıldı
         // Set the title and default close operation
         setTitle("Java Notepad");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -66,20 +67,14 @@ public class Notepad extends JFrame {
         setVisible(true);
     }
 
-    // Open a file
+    // Bu kod bloğu java swingde gui için dosya açmaya yarıyor .net de openFileDialog gibi
     private void openFile() {
-        // Create a file chooser
-        JFileChooser fileChooser = new JFileChooser();
 
-        // Show the file chooser and get the user's selection
+        JFileChooser fileChooser = new JFileChooser();
         int result = fileChooser.showOpenDialog(this);
 
-        // If the user clicked OK (i.e., didn't cancel the operation)
         if (result == JFileChooser.APPROVE_OPTION) {
-            // Get the selected file
             currentFile = fileChooser.getSelectedFile();
-
-            // Read the contents of the file and display them in the text area
             try {
                 textArea.setText(readFile(currentFile));
             } catch (IOException ex) {
@@ -88,24 +83,22 @@ public class Notepad extends JFrame {
         }
     }
 
-    // Save a file
+    // Dosyayı kaydetmek için fonksiyon
     private void saveFile() {
-// If a file is currently open
+        // Dosya yeni açılmış ise null pointer yani sadece ramde açılmış ama diskte karşılığı olmayabilir
         if (currentFile != null) {
-// Save the contents of the text area to the file
             try {
-                writeFile(currentFile, textArea.getText());
+                writeFile(currentFile, textArea.getText()); // text areada ne yazıyorsa dosyaya kaydediyorum
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
         } else {
-// Otherwise, show a file chooser to get the file to save to
-            JFileChooser fileChooser = new JFileChooser();
+            JFileChooser fileChooser = new JFileChooser(); // eğer kaydedilme hatası aldıysa yeni dosya olabilir farklı kaydet gibi çalışıyorum
             int result = fileChooser.showSaveDialog(this);
             if (result == JFileChooser.APPROVE_OPTION) {
                 currentFile = fileChooser.getSelectedFile();
                 try {
-                    writeFile(currentFile, textArea.getText());
+                    writeFile(currentFile, textArea.getText()); // diskteki karşılığına yazdırıyorum
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
@@ -113,9 +106,8 @@ public class Notepad extends JFrame {
         }
     }
 
-    // Read the contents of a file and return it as a string
     private String readFile(File file) throws IOException {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder(); // dosyanın içeriğini okumaya yarayan kod bloğu dosyayı okuyup newline ekliyorum
         BufferedReader br = new BufferedReader(new FileReader(file));
         String line;
         while ((line = br.readLine()) != null) {
@@ -125,21 +117,25 @@ public class Notepad extends JFrame {
         return sb.toString();
     }
 
-    // Write the contents of a string to a file
+    // Textareanın içini parametre olarak alıp dosyaya yazıyoruz
     private void writeFile(File file, String text) throws IOException {
-        BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+        BufferedWriter bw = new BufferedWriter(new FileWriter(file)); // parametre olarak textareanın içeriği geliyor ve dosyaya kaydediyor
         bw.write(text);
         bw.close();
     }
 
+    /* SİLİNEBİLİR */
+    // burası çalışmadığı için referans vermedim boş kod bir önceki versiyonda kullanıldı
     public void setSaveCommand(SaveCommand saveCommand) {
         this.saveCommand = saveCommand;
     }
 
+    // SAVE KOMUTU için çalışıyor
     public void save() {
         saveCommand.execute();
     }
 
+    /* SİLİNEBİLİR */
     public void setUpdateTitleCommand(UpdateTitleCommand updateTitleCommand) {
         this.updateTitleCommand = updateTitleCommand;
     }
@@ -152,6 +148,7 @@ public class Notepad extends JFrame {
         updateTitleCommand.run();
     }
 
+    // ZAMANI gözlemlemek için çalışıyor
     public void startTimeTitleObserver() {
         timeTitleObserver.update();
     }
