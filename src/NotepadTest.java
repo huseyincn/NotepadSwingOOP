@@ -14,5 +14,12 @@ public class NotepadTest {
         assertNotEquals("Java Notepad - ", notepad.getTitle());
     }
 
+    @Test
+    public void testGetInstance() { // dark mode 2 aynı nesneyi döndürüyor mu? (Singleton testi)
+        Notepad notepad = new Notepad();
+        DarkMode darkMode1 = DarkMode.getInstance(notepad);
+        DarkMode darkMode2 = DarkMode.getInstance(notepad);
+        assertSame(darkMode1, darkMode2);
+    }
 
 }

@@ -20,6 +20,10 @@ public class Notepad extends JFrame {
     // File
     private File currentFile; // kaydedilcek veya açılan dosyayı nesne olarak tutuyorum
 
+    public JTextArea getTextArea() {
+        return textArea;
+    }
+
     public Notepad() { // NOTEPAD kısmı internetten alındı basit notepad üzerinde değişiklik yapıldı
         // Set the title and default close operation
         setTitle("OOP NOTEPAD PROJESİ");
