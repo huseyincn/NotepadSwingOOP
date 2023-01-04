@@ -11,6 +11,8 @@ public class UpdateTitleCommand implements Runnable {
         this.dateFormat = new SimpleDateFormat("hh:mm:ss");
     }
 
+    // threadde çalışması için runnable yapıldı ilkte hatayla update butonu çağırılıyordu ama main thread swing tarafından
+    // kitlendiği için runnable yapılıp threade görev verildi
     public void run() {
         notepad.setTitle("OOP NOTEPAD PROJESİ - " + dateFormat.format(new Date()));
     }

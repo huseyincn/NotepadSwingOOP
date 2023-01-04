@@ -3,7 +3,7 @@ import static org.junit.Assert.*;
 
 public class NotepadTest {
 
-
+    // BAŞLIĞIN değişimini gözlemlemek için yazıldı
     @Test
     public void testStartTimeTitleObserver() throws InterruptedException {
         Notepad notepad = new Notepad();
