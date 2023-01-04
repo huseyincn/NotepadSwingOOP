@@ -1,7 +1,3 @@
-interface Command {
-    void execute();
-}
-
 public class SaveCommand implements Command {
 
     private Notepad notepad;
