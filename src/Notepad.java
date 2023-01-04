@@ -22,7 +22,7 @@ public class Notepad extends JFrame {
 
     public Notepad() { // NOTEPAD kısmı internetten alındı basit notepad üzerinde değişiklik yapıldı
         // Set the title and default close operation
-        setTitle("Java Notepad");
+        setTitle("OOP NOTEPAD PROJESİ");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         // Create a text area with the default font

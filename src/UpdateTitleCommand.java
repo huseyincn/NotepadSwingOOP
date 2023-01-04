@@ -12,6 +12,6 @@ public class UpdateTitleCommand implements Runnable {
     }
 
     public void run() {
-        notepad.setTitle("Java Notepad - " + dateFormat.format(new Date()));
+        notepad.setTitle("OOP NOTEPAD PROJESİ - " + dateFormat.format(new Date()));
     }
 }
