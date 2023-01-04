@@ -9,6 +9,10 @@ public class Notepad extends JFrame {
     // Text area
     private JTextArea textArea;
 
+
+    private SaveCommand saveCommand;
+
+
     // File
     private File currentFile;
 
@@ -123,5 +127,13 @@ public class Notepad extends JFrame {
         BufferedWriter bw = new BufferedWriter(new FileWriter(file));
         bw.write(text);
         bw.close();
+    }
+
+    public void setSaveCommand(SaveCommand saveCommand) {
+        this.saveCommand = saveCommand;
+    }
+
+    public void save() {
+        saveCommand.execute();
     }
 }
