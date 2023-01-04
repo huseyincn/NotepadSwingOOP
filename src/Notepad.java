@@ -9,9 +9,12 @@ public class Notepad extends JFrame {
     // Text area
     private JTextArea textArea;
 
-
+    // COMMAND YAPISI ICIN KULLANILIYOR
     private SaveCommand saveCommand;
 
+    // ZAMAN ICIN OBSERVER CLASS
+    private UpdateTitleCommand updateTitleCommand;
+    private TimeTitleObserver timeTitleObserver;
 
     // File
     private File currentFile;
@@ -135,5 +138,21 @@ public class Notepad extends JFrame {
 
     public void save() {
         saveCommand.execute();
+    }
+
+    public void setUpdateTitleCommand(UpdateTitleCommand updateTitleCommand) {
+        this.updateTitleCommand = updateTitleCommand;
+    }
+
+    public void setTimeTitleObserver(TimeTitleObserver timeTitleObserver) {
+        this.timeTitleObserver = timeTitleObserver;
+    }
+
+    public void updateTitle() {
+        updateTitleCommand.run();
+    }
+
+    public void startTimeTitleObserver() {
+        timeTitleObserver.update();
     }
 }
