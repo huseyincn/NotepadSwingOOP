@@ -40,10 +40,11 @@ public class Notepad extends JFrame {
         JMenuBar menuBar = new JMenuBar();
 
         // Create the File menu
-        JMenu fileMenu = new JMenu("File");
+        JMenu fileMenu = new JMenu("Dosya");
 
         // Create the Open menu item
-        JMenuItem openMenuItem = new JMenuItem("Open");
+        JMenuItem openMenuItem = new JMenuItem("AÇ");
+
         openMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 openFile();
@@ -51,8 +52,28 @@ public class Notepad extends JFrame {
         });
         fileMenu.add(openMenuItem);
 
+
+        JMenuItem saveAsMenuItem = new JMenuItem("FARKLI KAYDET");
+        saveAsMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                int result = fileChooser.showSaveDialog(Notepad.this);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    File file = fileChooser.getSelectedFile();
+                    try {
+                        saveAs(file);
+                    } catch (IOException ex) {
+                        JOptionPane.showMessageDialog(Notepad.this, "Error saving file", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        });
+        fileMenu.add(saveAsMenuItem);
+
+
         // Create the Save menu item
-        JMenuItem saveMenuItem = new JMenuItem("Save");
+        JMenuItem saveMenuItem = new JMenuItem("KAYDET");
         saveMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 saveFile();
@@ -60,11 +81,23 @@ public class Notepad extends JFrame {
         });
         fileMenu.add(saveMenuItem);
 
+
+        JMenuItem exitMenuItem = new JMenuItem("ÇIKIŞ");
+        exitMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                exit();
+            }
+        });
+        fileMenu.add(exitMenuItem);
+
+
         // Add the File menu to the menu bar
         menuBar.add(fileMenu);
 
         // Set the menu bar for the window
         setJMenuBar(menuBar);
+
 
         // Set the size and show the window
         setSize(800, 600);
@@ -127,6 +160,18 @@ public class Notepad extends JFrame {
         bw.write(text);
         bw.close();
     }
+
+    public void saveAs(File file) throws IOException {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            writer.write(textArea.getText());
+        }
+    }
+
+    public void exit() {
+        System.exit(0);
+    }
+
+
 
     /* SİLİNEBİLİR */
     // burası çalışmadığı için referans vermedim boş kod bir önceki versiyonda kullanıldı
