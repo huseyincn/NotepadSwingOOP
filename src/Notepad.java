@@ -188,13 +188,13 @@ public class Notepad extends JFrame {
     }
 
     public void search(String searchString) {
-        int index = textArea.getText().indexOf(searchString);
+        int index = textArea.getText().toLowerCase().indexOf(searchString);
         if (index >= 0) {
             textArea.setCaretPosition(index);
             textArea.moveCaretPosition(index + searchString.length());
             textArea.getCaret().setSelectionVisible(true);
         } else {
-            JOptionPane.showMessageDialog(this, "Search string not found", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Aranan kelime bulunamadı.", "Arama Başarısız", JOptionPane.ERROR_MESSAGE);
         }
     }
 
