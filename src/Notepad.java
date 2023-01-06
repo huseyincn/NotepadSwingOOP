@@ -20,6 +20,9 @@ public class Notepad extends JFrame {
     // File
     private File currentFile; // kaydedilcek veya açılan dosyayı nesne olarak tutuyorum
 
+    private JTextField searchField;
+    private JButton searchButton;
+
     public JTextArea getTextArea() {
         return textArea;
     }
@@ -70,6 +73,23 @@ public class Notepad extends JFrame {
             }
         });
         fileMenu.add(saveAsMenuItem);
+
+        searchField = new JTextField(20);
+        searchButton = new JButton("Search");
+
+        // Add the search components to a panel
+        JPanel searchPanel = new JPanel();
+        searchPanel.add(searchField);
+        searchPanel.add(searchButton);
+        add(searchPanel, "South");
+
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String searchString = searchField.getText();
+                search(searchString);
+            }
+        });
 
 
         // Create the Save menu item
@@ -164,6 +184,17 @@ public class Notepad extends JFrame {
     public void saveAs(File file) throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             writer.write(textArea.getText());
+        }
+    }
+
+    public void search(String searchString) {
+        int index = textArea.getText().indexOf(searchString);
+        if (index >= 0) {
+            textArea.setCaretPosition(index);
+            textArea.moveCaretPosition(index + searchString.length());
+            textArea.getCaret().setSelectionVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Search string not found", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
