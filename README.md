@@ -1,6 +1,6 @@
 # NotepadSwingOOP
 
-
+Hüseyin Çan - Yasin Özkurt
 Our project to explore desing pattern implementation in a real-life app.
 Java swing notepad supported by 5 different design patterns.
 
